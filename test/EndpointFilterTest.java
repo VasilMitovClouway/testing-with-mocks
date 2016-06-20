@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.is;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
@@ -19,7 +20,8 @@ public class EndpointFilterTest {
   public JUnitRuleMockery context = new JUnitRuleMockery();
   @Mock
   private Endpoint endpoint;
-
+  @Mock
+  private Endpoint endpoint1;
 
   @Test
   public void matchingAndFilteringUrl() throws Exception {
@@ -33,7 +35,7 @@ public class EndpointFilterTest {
   }
 
   @Test
-  public void matchingButNotFindingUrl() throws Exception {
+  public void matchingUrlThatDoesntNeedToBeFiltered() throws Exception {
     String url = "noNeedToFilterThisUrl";
     context.checking(new Expectations() {{
       oneOf(endpoint).matches(url);
@@ -43,14 +45,28 @@ public class EndpointFilterTest {
     assertThat(endpointFilter.shouldFilter("noNeedToFilterThisUrl"), is(false));
   }
 
+  @Test
+  public void matchingMoreThanOneUrl() throws Exception {
+    String url1 = "shouldFilter";
+    context.checking(new Expectations() {{
+      oneOf(endpoint).matches(url1);
+      will(returnValue(false));
+      oneOf(endpoint1).matches(url1);
+      will(returnValue(true));
+
+    }});
+    EndpointFilter endpointFilter = new EndpointFilter(endpoint, endpoint1);
+    assertThat(endpointFilter.shouldFilter(url1), is(true));
+  }
+
   @Test(expected = IllegalArgumentException.class)
   public void matchingEmptyUrlThrowsException() throws Exception {
-    String emptyUrl="";
-    context.checking(new Expectations(){{
+    String emptyUrl = "";
+    context.checking(new Expectations() {{
       allowing(endpoint).matches(emptyUrl);
       will(throwException(new IllegalArgumentException("You cannot pass an empty Url")));
     }});
-    EndpointFilter endpointFilter=new EndpointFilter(endpoint);
+    EndpointFilter endpointFilter = new EndpointFilter(endpoint);
     endpointFilter.shouldFilter("");
   }
 }

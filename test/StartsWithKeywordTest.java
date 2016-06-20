@@ -1,3 +1,6 @@
+import org.jmock.auto.Mock;
+import org.jmock.integration.junit4.JUnitRuleMockery;
+import org.junit.Rule;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -6,12 +9,20 @@ import static org.junit.Assert.*;
  * @author Vasil Mitov (v.mitov.clouway@gmail.com)
  */
 public class StartsWithKeywordTest {
-  StartsWithKeyword keyword=new StartsWithKeyword("someKeyword");
-  EndpointFilter endpointFilter=new EndpointFilter(keyword);
+
+  @Rule
+  public JUnitRuleMockery context = new JUnitRuleMockery();
+
+  @Mock
+  private Endpoint endpoint=new StartsWithKeyword("someKeyword");
+
+
+  EndpointFilter endpointFilter=new EndpointFilter(endpoint);
+
 
   @Test
   public void urlStartingWithKeywordShouldReturnTrue() throws Exception {
-    assertTrue(endpointFilter.shouldFilter("someKeywordThatIsHere"));
+    assertTrue(endpointFilter.shouldFilter("someKeywordAndSomeText"));
   }
 
   @Test
