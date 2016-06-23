@@ -44,8 +44,23 @@ public class SmSenderTest {
   @Test
   public void smsWithNotValidNumberWillNotBeValid() throws Exception {
     Sms notValidSmsWithTooShortNumber = new Sms("Some Title", "The Context is here", "0883");
-    Sms notValidSmsWithNumberNotStartingWith08 = new Sms("Some Title", "The Context is here","08833233931");
+    Sms notValidSmsWithNumberNotStartingWith08 = new Sms("Some Title", "The Context is here", "08833233931");
+    Sms notValidSmsWithNumberContainingChars=new Sms("Some Title","Context of sms","0883a23393");
     assertThat(smSender.checkContentOf(notValidSmsWithNumberNotStartingWith08), is(false));
     assertThat(smSender.checkContentOf(notValidSmsWithTooShortNumber), is(false));
+    assertThat(smSender.checkContentOf(notValidSmsWithNumberContainingChars),is(false));
   }
+
+  @Test
+  public void smsContextWithLowerThan10Symbols() throws Exception {
+    Sms sms = new Sms("Short sms", "<10", "0883323393");
+    assertThat(smSender.checkContentOf(sms), is(false));
+  }
+
+  @Test
+  public void smsContextWithMoreThan100Symbols() throws Exception {
+    Sms sms = new Sms("Too long sms", "Ten SymbolTen SymbolTen SymbolTen SymbolTen SymbolTen SymbolTen SymbolTen SymbolTen SymbolTen Symbol1", "0883323393");
+    assertThat(smSender.checkContentOf(sms), is(false));
+  }
+
 }
