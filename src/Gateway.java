@@ -12,9 +12,6 @@ public class Gateway {
   }
 
   public boolean send(Sms sms) {
-    if (validator.checkContentOf(sms)) {
-      return true;
-    }
-    return false;
+    return validator.checkContentOf(sms);
   }
 }
