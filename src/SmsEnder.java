@@ -1,25 +1,23 @@
-import java.util.regex.Pattern;
-
 /**
  * @author Vasil Mitov (v.mitov.clouway@gmail.com)
  */
-public class SmSender implements Validator {
+public class SmsEnder implements Validator {
   @Override
-  public boolean checkContentOf(Sms sms) {
-    if (titleChecker(sms)||contextChecker(sms)||numberChecker(sms)){
+  public boolean check(Sms sms) {
+    if (mistakesInTitleOf(sms)|| mistakesInContentOf(sms)|| mistakesInNumberOf(sms)){
       return false;
     }
     return true;
   }
 
-  private boolean titleChecker(Sms sms) {
+  private boolean mistakesInTitleOf(Sms sms) {
     if (sms.getTitle().isEmpty()) {
       return true;
     }
     return false;
   }
 
-  private boolean numberChecker(Sms sms) {
+  private boolean mistakesInNumberOf(Sms sms) {
     if (sms.getNumberAsString().isEmpty())
       return true;
     if (!sms.getNumberAsString().startsWith("08")) {
@@ -34,7 +32,7 @@ public class SmSender implements Validator {
     return false;
   }
 
-  private boolean contextChecker(Sms sms) {
+  private boolean mistakesInContentOf(Sms sms) {
     if (sms.getContext().isEmpty()) {
       return true;
     }

@@ -24,7 +24,7 @@ public class GatewayTest {
     gateway = new Gateway(validator);
     Sms sms = new Sms("Title", "Some context of the sms", "0883323393");
     context.checking(new Expectations() {{
-      oneOf(validator).checkContentOf(sms);
+      oneOf(validator).check(sms);
       will(returnValue(true));
     }});
     assertThat(gateway.send(sms), is(true));
@@ -36,7 +36,7 @@ public class GatewayTest {
     gateway = new Gateway(validator);
     Sms sms = new Sms("Title", "Some context of the sms", "0883323393");
     context.checking(new Expectations() {{
-      oneOf(validator).checkContentOf(sms);
+      oneOf(validator).check(sms);
       will(returnValue(false));
     }});
     assertThat(gateway.send(sms), is(false));

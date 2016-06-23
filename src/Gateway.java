@@ -12,6 +12,6 @@ public class Gateway {
   }
 
   public boolean send(Sms sms) {
-    return validator.checkContentOf(sms);
+    return validator.check(sms);
   }
 }
