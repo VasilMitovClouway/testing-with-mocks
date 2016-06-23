@@ -5,13 +5,20 @@
  */
 public class Gateway {
   private Validator validator;
+  private Sender sender;
 
 
-  public Gateway(Validator validator) {
+  public Gateway(Validator validator, Sender sender) {
     this.validator = validator;
+    this.sender = sender;
   }
 
-  public boolean send(Sms sms) {
-    return validator.check(sms);
+  public boolean send(Sms sms) throws UnableToSendSmsAtTheMoment {
+    if(validator.check(sms)) {
+      if (!sender.send(sms)){
+        throw new UnableToSendSmsAtTheMoment();
+      }
+    }
+    return false;
   }
 }

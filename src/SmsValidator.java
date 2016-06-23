@@ -1,7 +1,7 @@
 /**
  * @author Vasil Mitov (v.mitov.clouway@gmail.com)
  */
-public class SmsEnder implements Validator {
+public class SmsValidator implements Validator {
   @Override
   public boolean check(Sms sms) {
     if (mistakesInTitleOf(sms)|| mistakesInContentOf(sms)|| mistakesInNumberOf(sms)){
