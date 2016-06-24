@@ -5,9 +5,6 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Test;
 
 
-import java.util.LinkedHashMap;
-
-
 /**
  * @author Vasil Mitov (v.mitov.clouway@gmail.com)
  */
@@ -28,7 +25,7 @@ public class UserRepoReceivesUsersAndValidatesTheirAgeTest {
     context.checking(new Expectations() {{
       oneOf(userDB).checkForUserByName("Vasko");
       will(returnValue(false));
-      oneOf(validator).validateUserAge(vasko);
+      oneOf(validator).validateAge(vasko);
       will(returnValue(true));
       oneOf(userDB).add(vasko);
       will(returnValue(true));
@@ -43,7 +40,7 @@ public class UserRepoReceivesUsersAndValidatesTheirAgeTest {
     context.checking(new Expectations() {{
       oneOf(userDB).checkForUserByName("Timmy");
       will(returnValue(false));
-      oneOf(validator).validateUserAge(youngBoy);
+      oneOf(validator).validateAge(youngBoy);
       will(returnValue(false));
     }});
     userRepository.registerUser(youngBoy);
@@ -67,7 +64,7 @@ public class UserRepoReceivesUsersAndValidatesTheirAgeTest {
     context.checking(new Expectations() {{
       oneOf(userDB).checkForUserByName("Jinx");
       will(returnValue(false));
-      oneOf(validator).validateUserAge(unluckyUser);
+      oneOf(validator).validateAge(unluckyUser);
       will(returnValue(true));
       oneOf(userDB).add(unluckyUser);
       will(returnValue(false));

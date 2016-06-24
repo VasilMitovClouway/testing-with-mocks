@@ -1,7 +1,5 @@
 package com.clouway.userrepository;
 
-import java.util.LinkedHashMap;
-
 /**
  * @author Vasil Mitov (v.mitov.clouway@gmail.com)
  */
@@ -16,7 +14,7 @@ class UserRepository {
 
   public void registerUser(User user) throws CannotRegisterAtThisTime, UserAlreadyExists {
     if(!userDB.checkForUserByName(user.name())) {
-      if (validator.validateUserAge(user)) {
+      if (validator.validateAge(user)) {
         if (userDB.add(user)) ;
         else
           throw new CannotRegisterAtThisTime();
