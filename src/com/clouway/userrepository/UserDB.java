@@ -5,4 +5,7 @@ package com.clouway.userrepository;
  */
 interface UserDB {
   boolean add(User user);
+
+  boolean checkForUserByName(String name);
+  User requestUserInformation(String name);
 }

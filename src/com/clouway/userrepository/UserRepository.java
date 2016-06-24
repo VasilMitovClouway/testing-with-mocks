@@ -8,25 +8,33 @@ import java.util.LinkedHashMap;
 class UserRepository {
   private final UserDB userDB;
   private final Validator validator;
-  private LinkedHashMap<String, User> validUsers = new LinkedHashMap<>();
 
   public UserRepository(UserDB userDB, Validator validator) {
     this.userDB = userDB;
     this.validator = validator;
   }
 
-  public void registerUser(User user) throws CannotRegisterAtThisTime {
-    if (validator.validateUserAge(user)) {
-      if (userDB.add(user)) ;
-      else
-        throw new CannotRegisterAtThisTime();
-
-
+  public void registerUser(User user) throws CannotRegisterAtThisTime, UserAlreadyExists {
+    if(!userDB.checkForUserByName(user.name())) {
+      if (validator.validateUserAge(user)) {
+        if (userDB.add(user)) ;
+        else
+          throw new CannotRegisterAtThisTime();
+      }
     }
+    else
+       throw new UserAlreadyExists();
   }
 
 
-  public boolean isAdult(String name) {
+  public boolean isAdult(String name) throws UserNotRegistered {
+    if(!userDB.checkForUserByName(name)){
+      throw new UserNotRegistered();
+    }
+    Integer age = Integer.valueOf(userDB.requestUserInformation(name).age());
+    if (age > 18) {
+      return true;
+    }
     return false;
   }
 
