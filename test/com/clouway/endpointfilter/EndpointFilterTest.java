@@ -1,7 +1,9 @@
-/**
+package com.clouway.endpointfilter; /**
  * @author Vasil Mitov (v.mitov.clouway@gmail.com)
  */
 
+import com.clouway.endpointfilter.Endpoint;
+import com.clouway.endpointfilter.EndpointFilter;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;

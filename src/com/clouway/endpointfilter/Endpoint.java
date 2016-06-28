@@ -1,3 +1,5 @@
+package com.clouway.endpointfilter;
+
 /**
  * @author Vasil Mitov (v.mitov.clouway@gmail.com)
  */

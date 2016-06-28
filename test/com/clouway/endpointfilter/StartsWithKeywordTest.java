@@ -1,3 +1,8 @@
+package com.clouway.endpointfilter;
+
+import com.clouway.endpointfilter.Endpoint;
+import com.clouway.endpointfilter.EndpointFilter;
+import com.clouway.endpointfilter.StartsWithKeyword;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Rule;

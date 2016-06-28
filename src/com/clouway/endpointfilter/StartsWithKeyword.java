@@ -1,3 +1,7 @@
+package com.clouway.endpointfilter;
+
+import com.clouway.endpointfilter.Endpoint;
+
 /**
  * @author Vasil Mitov (v.mitov.clouway@gmail.com)
  */
